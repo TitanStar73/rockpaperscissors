@@ -40,20 +40,34 @@ SCISSORS = r"""
  '----------------' 
 """
 ASSETS = [ROCK, PAPER, SCISSORS]
-
 DEFAULT_COLOR = "\033[0m"
 YELLOW = "\033[33m"
 GREEN = "\033[32m"
 RED = "\033[31m"
-BLUE = "\033[34m"
-WHITE = "\033[37m"
+
+import random
+
+history = [random.randint(1,3) for i in range(40)]
 
 def get_move():
+    thing = random.choice(history)
+    if thing == 1:
+        return 2
+    elif thing == 2:
+        return 3
     return 1
 
+RESULTS_COLOR = [YELLOW, GREEN, RED]
+
 def print_move(user,computer,result):
+    print(RESULTS_COLOR[result], end='')
     for i in range(len(ASSETS[0].split('\n'))):
         print(ASSETS[user-1].split('\n')[i] + "   " + ASSETS[computer-1].split('\n')[i])
+    print(DEFAULT_COLOR, end='')
+
+
+scorePlayer = 0
+scoreComputer = 0
 
 while True:
     while True:
@@ -93,6 +107,14 @@ while True:
         else:
             results = 0
     
+    if results == 1:
+        scorePlayer += 1
+    elif results == 2:
+        scoreComputer += 1
+
     print_move(choice, computer, results)
+    print(f"Player: {scorePlayer} Computer: {scoreComputer}")
+    history.append(choice)
+    history = history[1:]
 
     
