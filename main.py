@@ -47,14 +47,51 @@ RED = "\033[31m"
 
 import random
 
-history = [random.randint(1,3) for i in range(40)]
+PLAY_STYLE = "1r111" # Randomly picks a play style from here, that way computers can have a specific "playstyle"
+"""
+Play styles:
+0 - Random
+1 - Probability based on history
+2 - Pick players's previous move
+9 - Always picks the winning move
+r123 - Creates a bias based on the weights for rock, paper, scissors here 1,2,3 ; Only works on play style 0 and initial history for p1
+
+Some basic playstyles, feel free to customise :)
+1r111 - Always picks random
+9r111 - Always win
+2r111 - Historical probability
+0091111122r111 - Well rounded with slight edge but can lose
+0009111122r765 - Uses some studies on the best moves (initially)
+"""
+
+PLAYBOOK = []
+for i in range(int(PLAY_STYLE[-3])):
+    PLAYBOOK.append(1)
+for i in range(int(PLAY_STYLE[-2])):
+    PLAYBOOK.append(2)
+for i in range(int(PLAY_STYLE[-1])):
+    PLAYBOOK.append(3)
+
+PLAY_STYLE = PLAY_STYLE.split('r')[0]
+PLAY_STYLE = [int(char) for char in PLAY_STYLE]
+
+history = [random.choice(PLAYBOOK) for i in range(40)]
 
 def get_move():
-    thing = random.choice(history)
-    if thing == 1:
-        return 2
-    elif thing == 2:
-        return 3
+    my_play = random.choice(PLAY_STYLE)
+    if my_play == 0:
+        return random.choice(PLAYBOOK)
+    elif my_play == 1:
+        thing = random.choice(history)
+        if thing == 1:
+            return 2
+        elif thing == 2:
+            return 3
+        return 1
+    elif my_play == 2:
+        return history[-1]
+    elif my_play == 9:
+        return 9
     return 1
 
 RESULTS_COLOR = [YELLOW, GREEN, RED]
@@ -83,6 +120,13 @@ while True:
         choice = 3
     
     computer = get_move()
+    if computer == 9:
+        if choice == 1:
+            computer = 2
+        elif choice == 2:
+            computer = 3
+        else:
+            computer = 1
 
     results = None # 0 = draw, 1 = win, 2 = lose
     if choice == 1:
