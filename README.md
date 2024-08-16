@@ -26,6 +26,8 @@ Some basic playstyles, feel free to customise :)
 
 9r111 - Always win
 
-2r111 - Historical probability
+2r111 - Historical probability (based on players last 40 moves)
+
 0091111122r111 - Well rounded with slight edge but can lose
+
 0009111122r765 - Uses some studies on the best moves (initially)
