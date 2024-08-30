@@ -2,6 +2,8 @@
 
 Console based Rock Paper Scissors game!
 
+![image](https://github.com/user-attachments/assets/5606370b-6bc5-4d2f-827c-4368afaf913a)
+
 # How to Play
 
 Run main.py on your system, no dependencies :) OR run main.exe
